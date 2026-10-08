@@ -32,7 +32,7 @@ def pascal(key: str) -> str:
 
 def flag_config(provider: str, key: str, exp: Experiment) -> dict[str, Any]:
     p = exp.proposal
-    desc = f"{p.name} — {p.hypothesis[:140]}"
+    desc = f"{p.name}: {p.hypothesis[:140]}"
     if provider == "launchdarkly":
         return {
             "key": key, "name": p.name, "description": desc, "kind": "boolean", "temporary": True,
@@ -86,7 +86,7 @@ export default function {component}({{ onPrimaryAction }}: {component}Props) {{
 
   return (
     <section data-experiment="{exp.id}" className="mx-auto max-w-xl space-y-6 p-8">
-      {{/* TODO (autopilot): implement — {p.change} */}}
+      {{/* TODO (autopilot): implement: {p.change} */}}
       <h1 className="text-3xl font-semibold tracking-tight">{p.name}</h1>
       <p className="text-base text-slate-600">{p.hypothesis}</p>
       <button

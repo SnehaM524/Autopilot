@@ -2,7 +2,7 @@
 
 All agent reasoning goes through `LLM.json(...)` (structured output) or
 `LLM.text(...)`. The mock returns None for json/text so callers fall back to
-their heuristic path — the whole program runs with no API key.
+their heuristic path: the whole program runs with no API key.
 """
 
 from __future__ import annotations

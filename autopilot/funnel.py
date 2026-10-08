@@ -52,9 +52,9 @@ def analyze(funnel: Funnel) -> FunnelAnalysis:
         if key in BENCHMARKS:
             lo, hi = BENCHMARKS[key]
             if rate < lo:
-                notes.append(f"{key}: {rate:.0%} is below the typical {lo:.0%}-{hi:.0%} range — strongest candidate for intervention")
+                notes.append(f"{key}: {rate:.0%} is below the typical {lo:.0%}-{hi:.0%} range: strongest candidate for intervention")
             elif rate > hi:
-                notes.append(f"{key}: {rate:.0%} is above the typical {lo:.0%}-{hi:.0%} range — likely not the bottleneck")
+                notes.append(f"{key}: {rate:.0%} is above the typical {lo:.0%}-{hi:.0%} range: likely not the bottleneck")
     biggest = max(drops, key=lambda d: d.users_lost)
     return FunnelAnalysis(
         funnel_id=funnel.id,

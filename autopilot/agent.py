@@ -169,7 +169,7 @@ class Agent:
         say = log_fn or (lambda *_: None)
         for funnel in list(self.funnels.values()):
             analysis = self.analyze(funnel.id)
-            say(f"\n== {funnel.name} ({funnel.id}) — {analysis.overall_conversion:.1%} end-to-end, biggest leak {analysis.biggest_leak.from_step}->{analysis.biggest_leak.to_step} ({analysis.biggest_leak.users_lost:,} lost)")
+            say(f"\n== {funnel.name} ({funnel.id}): {analysis.overall_conversion:.1%} end-to-end, biggest leak {analysis.biggest_leak.from_step}->{analysis.biggest_leak.to_step} ({analysis.biggest_leak.users_lost:,} lost)")
             exps = self.propose(funnel.id, n=per_funnel)
             for e in exps:
                 say(f"  #{e.ranking.rank:<2} {e.proposal.name:<48} step={e.proposal.target_step:<12} lift≈{e.proposal.expected_lift:+.0%} score={e.ranking.priority_score:>7.1f}")

@@ -1,4 +1,4 @@
-# Autopilot — AI Growth Experimentation Agent
+# Autopilot: AI Growth Experimentation Agent
 
 An agent that reads funnel data, proposes experiments ranked by expected lift, generates the React variant and feature-flag config, and writes the readout at significance.
 
@@ -45,7 +45,7 @@ autopilot simulate                       # full program, offline, ~2 seconds
 pytest                                   # 21 tests
 ```
 
-No API key needed. With `ANTHROPIC_API_KEY` set, Claude writes the proposals (specific to your product context), the actual `Variant.tsx` for each change, and the readout prose. Without it, the agent uses the 21-pattern playbook in `config/playbook.yaml` and typed scaffolds — the ranking, stats, and loop are identical.
+No API key needed. With `ANTHROPIC_API_KEY` set, Claude writes the proposals (specific to your product context), the actual `Variant.tsx` for each change, and the readout prose. Without it, the agent uses the 21-pattern playbook in `config/playbook.yaml` and typed scaffolds: the ranking, stats, and loop are identical.
 
 ## How ranking works
 
@@ -70,7 +70,7 @@ Every number the readout quotes comes from `StatsResult`, so the LLM can't inven
 
 ## Connecting real data
 
-**Funnels.** `data/funnels.json` is the simplest input — one object per funnel with ordered steps and 28-day user counts. Or pull live:
+**Funnels.** `data/funnels.json` is the simplest input: one object per funnel with ordered steps and 28-day user counts. Or pull live:
 
 ```python
 from autopilot.sources import MixpanelSource, PostHogSource
@@ -84,11 +84,11 @@ funnel = ph.funnel(["landing_view", "signup_form_view", "signup_submit", "activa
 
 **Flags.** Set `AUTOPILOT_FLAG_PROVIDER` and `generate` emits the right JSON and the right React hook (`useFlags`, `useExperiment`, `useFeatureIsOn`, `useFeatureFlagVariantKey`). Push the JSON with the provider's CLI/API or paste it in.
 
-**Analytics in the variant.** Generated components call `track("experiment_exposure", …)` on mount and `track("experiment_primary_action", …)` on the CTA — point `@/lib/analytics` at your SDK.
+**Analytics in the variant.** Generated components call `track("experiment_exposure", …)` on mount and `track("experiment_primary_action", …)` on the CTA: point `@/lib/analytics` at your SDK.
 
 ## Simulation
 
-`autopilot simulate` runs the entire program offline against the two sample funnels. Each shipped experiment gets a hidden "true" effect drawn around the agent's prior (a working idea lands at roughly 60% of the prior; a dud lands near zero or slightly negative), daily traffic is split 50/50, and the agent observes every day until it decides. It's deterministic per seed, so you can study how the sequential boundary behaves — including the occasional false positive at the final look, which is what α = 0.05 means.
+`autopilot simulate` runs the entire program offline against the two sample funnels. Each shipped experiment gets a hidden "true" effect drawn around the agent's prior (a working idea lands at roughly 60% of the prior; a dud lands near zero or slightly negative), daily traffic is split 50/50, and the agent observes every day until it decides. It's deterministic per seed, so you can study how the sequential boundary behaves: including the occasional false positive at the final look, which is what α = 0.05 means.
 
 ## Layout
 

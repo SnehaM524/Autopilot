@@ -24,7 +24,7 @@ def _template(exp: Experiment, funnel: Funnel) -> str:
     verdict = {"ship": "SHIP", "kill": "KILL", "inconclusive": "INCONCLUSIVE"}.get(s.decision, s.decision.upper())
     sign = "+" if s.relative_lift >= 0 else ""
     lines = [
-        f"# {p.name} — {verdict}",
+        f"# {p.name}: {verdict}",
         "",
         f"**Funnel:** {funnel.name} · **Step:** {p.target_step} · **Ran:** {s.days_running} days · **Flag:** `{exp.artifact.flag_key if exp.artifact else '-'}`",
         "",
@@ -43,7 +43,7 @@ def _template(exp: Experiment, funnel: Funnel) -> str:
         "## What we learned",
     ]
     if s.decision == "ship":
-        lines.append(f"The hypothesis held. Predicted {p.expected_lift:+.0%}, observed {s.relative_lift:+.1%} — "
+        lines.append(f"The hypothesis held. Predicted {p.expected_lift:+.0%}, observed {s.relative_lift:+.1%}: "
                      + ("close to the prior." if abs(s.relative_lift - p.expected_lift) < 0.05 else "the prior was off; recalibrate similar bets."))
         lines += ["", "## Next", f"- Roll `{exp.artifact.flag_key if exp.artifact else 'flag'}` to 100% and delete the control path.",
                   "- Watch downstream steps for a week to confirm the lift carries through.",
@@ -54,7 +54,7 @@ def _template(exp: Experiment, funnel: Funnel) -> str:
     else:
         lines.append(f"No reliable effect after {s.days_running} days and {min(s.control.users, s.treatment.users):,} per arm "
                      f"({s.sample_fraction:.0%} of the sample needed for {mde_note(s)}). "
-                     + (f"The raw p-value ({s.p_value:.3f}) did not clear the sequential threshold ({s.alpha_threshold:.4f}) at this sample size — "
+                     + (f"The raw p-value ({s.p_value:.3f}) did not clear the sequential threshold ({s.alpha_threshold:.4f}) at this sample size: "
                         "early looks need a stricter bar to avoid false positives. " if s.p_value < 0.05 else "")
                      + f"Any true lift is likely within {s.ci_low:+.0%} to {s.ci_high:+.0%}.")
         lines += ["", "## Next", "- Roll back to control.", "- If we still believe in it, rerun with a larger change or a bigger audience."]

@@ -55,7 +55,7 @@ def main(argv: list[str] | None = None) -> None:
             if args.funnel and f.id != args.funnel:
                 continue
             an = agent.analyze(f.id)
-            print(f"\n{f.name} — {an.overall_conversion:.1%} end-to-end, {an.total_lost:,} lost")
+            print(f"\n{f.name}: {an.overall_conversion:.1%} end-to-end, {an.total_lost:,} lost")
             for d in an.dropoffs:
                 bar = "█" * int(d.share_of_total_loss * 40)
                 print(f"  {d.from_step:>13} -> {d.to_step:<13} {d.step_rate:6.1%}  lost {d.users_lost:>7,}  {bar}")
